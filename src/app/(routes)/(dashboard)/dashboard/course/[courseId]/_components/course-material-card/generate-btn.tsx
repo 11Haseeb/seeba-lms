@@ -48,7 +48,6 @@ const GenerateBtn = ({ type, isMaterialReady }: Props) => {
             description: error.response?.data.message,
           });
         }
-        console.error(error);
       }
     });
   };

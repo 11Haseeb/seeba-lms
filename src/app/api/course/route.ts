@@ -1,6 +1,7 @@
 import { CourseOutlineAiModel } from "@/config/AiModel";
 import { prisma } from "@/lib/prisma";
 import { ApiError, ApiResponse } from "@/utils/ApiHandler";
+import { currentUser } from "@clerk/nextjs/server";
 
 // Generate Course Outline
 export async function POST(request: Request) {
@@ -55,6 +56,8 @@ export async function GET(request: Request) {
     const sort = searchParams.get("sort") || "desc";
     const limit = parseInt(searchParams.get("limit") || "12");
     const offset = parseInt(searchParams.get("offset") || "0");
+    const user = await currentUser();
+    const email = user?.emailAddresses[0]?.emailAddress;
 
     if (id) {
       const course = await prisma.course.findFirst({ where: { id } });
@@ -65,6 +68,7 @@ export async function GET(request: Request) {
 
     const courses = await prisma.course.findMany({
       where: {
+        createdBy: email,
         OR: [
           { purpose: { contains: search, mode: "insensitive" } },
           { topic: { contains: search, mode: "insensitive" } },
