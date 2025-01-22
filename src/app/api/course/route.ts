@@ -39,11 +39,13 @@ export async function POST(request: Request) {
       );
     }
   } catch (error) {
-    return ApiResponse(
-      500,
-      "Something went wrong while generating course",
-      error
-    );
+    if (error instanceof Error) {
+      return ApiResponse(
+        500,
+        "Something went wrong while generating course",
+        error.message
+      );
+    }
   }
 }
 

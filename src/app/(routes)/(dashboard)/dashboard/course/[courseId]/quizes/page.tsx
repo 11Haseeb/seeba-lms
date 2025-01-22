@@ -23,8 +23,10 @@ const QuizesPage = () => {
   const { loading, materialData } = useCourseMaterial();
   const [quizCount, setQuizCount] = useState(1);
   const [quizes, setQuizes] = useState<Quiz[]>([]);
-  const [currentQuiz, setCurrentQuiz] = useState("");
-  const [showAnswer, setShowAnswer] = useState(false);
+  const [activeQuestion, setActiveQuestion] = useState<{
+    questionIndex: number | null;
+    selectedOption: string | null;
+  }>({ questionIndex: null, selectedOption: null });
 
   useEffect(() => {
     setQuizes(materialData.quizes);
@@ -33,11 +35,13 @@ const QuizesPage = () => {
   const handlePrev = () => {
     setQuizCount(quizCount - 1);
     window.scrollTo({ top: 0, behavior: "smooth" });
+    setActiveQuestion({ questionIndex: null, selectedOption: null });
   };
 
   const handleNext = () => {
     setQuizCount(quizCount + 1);
     window.scrollTo({ top: 0, behavior: "smooth" });
+    setActiveQuestion({ questionIndex: null, selectedOption: null });
   };
 
   return (
@@ -57,7 +61,13 @@ const QuizesPage = () => {
                     className={`h-2 w-full ${
                       index < quizCount ? "bg-blue-600" : "bg-zinc-100"
                     } rounded cursor-pointer`}
-                    onClick={() => setQuizCount(index + 1)}
+                    onClick={() => {
+                      setQuizCount(index + 1);
+                      setActiveQuestion({
+                        questionIndex: null,
+                        selectedOption: null,
+                      });
+                    }}
                   />
                 );
               })}
@@ -83,37 +93,43 @@ const QuizesPage = () => {
             </p>
 
             {quizes[quizCount - 1]?.questions.map((question, index) => {
+              const isActive = activeQuestion.questionIndex === index;
+
               return (
-                <div key={index + 1} className="mb-6">
+                <div key={index} className="mb-6">
                   <span className="text-zinc-600">
                     Question No: {index + 1}
                   </span>
                   <h4 className="font-bold mb-2">{question.question}</h4>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    {question.options.map((option, index) => {
+                    {question.options.map((option, optionIndex) => {
                       return (
                         <h5
-                          key={index}
+                          key={optionIndex}
                           className="bg-gray-100 p-4 rounded-xl cursor-pointer hover:shadow-md transition-all"
-                          onClick={() => {
-                            setCurrentQuiz(option);
-                            setShowAnswer(true);
-                          }}
+                          onClick={() =>
+                            setActiveQuestion({
+                              questionIndex: index,
+                              selectedOption: option,
+                            })
+                          }
                         >
                           {option}
                         </h5>
                       );
                     })}
                   </div>
-                  {showAnswer && (
+                  {isActive && (
                     <h6
                       className={`text-center p-4 mt-4 ${
-                        currentQuiz === question.answer
+                        activeQuestion.selectedOption === question.answer
                           ? "text-green-800 bg-green-300 rounded-lg"
                           : "text-red-700 bg-red-300"
                       } w-[200px] m-auto`}
                     >
-                      {currentQuiz === question.answer ? "Correct" : "Wrong"}
+                      {activeQuestion.selectedOption === question.answer
+                        ? "Correct"
+                        : "Wrong"}
                     </h6>
                   )}
                 </div>
