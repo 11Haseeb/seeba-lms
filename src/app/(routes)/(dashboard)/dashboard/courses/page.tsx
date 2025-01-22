@@ -6,15 +6,14 @@ import SortDropdown from "./_components/sort-dropdown";
 import { Skeleton } from "@/components/ui/skeleton";
 import CourseCard from "@/components/course-card/course-card";
 import { useCoursesContext } from "../../_contexts/courses-provider";
-import PaginationComponent from "./_components/pagination";
 
 const Courses = () => {
   const { loading, courses, search, setSearch, setSort, setLimit } =
     useCoursesContext();
 
   useEffect(() => {
-    setLimit(30);
-  }, []);
+    setLimit(12);
+  }, [setLimit]);
 
   return (
     <section>

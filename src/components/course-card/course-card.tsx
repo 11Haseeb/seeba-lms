@@ -13,7 +13,6 @@ import {
 import Link from "next/link";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
-import { Progress } from "@/components/ui/progress";
 import DeleteBtn from "./delete-btn";
 
 const CourseCard = ({ course }: { course: Course }) => {

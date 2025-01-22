@@ -1,6 +1,6 @@
 "use client";
 
-import { useTransition, useState, useEffect } from "react";
+import { useTransition, useState, useEffect, useCallback } from "react";
 import { useParams } from "next/navigation";
 import { Course } from "@/types/course";
 import axios from "axios";
@@ -10,7 +10,7 @@ const useCourse = () => {
   const [course, setCourse] = useState<Course>();
   const [loading, start] = useTransition();
 
-  const fetchCourse = () => {
+  const fetchCourse = useCallback(() => {
     start(async () => {
       const response = await axios.get(`/api/course?id=${courseId}`);
 
@@ -18,11 +18,11 @@ const useCourse = () => {
         setCourse(response.data.data);
       }
     });
-  };
+  }, [start, courseId]);
 
   useEffect(() => {
     fetchCourse();
-  }, [courseId]);
+  }, [fetchCourse]);
 
   return { course, loading, fetchCourse };
 };

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, useTransition } from "react";
+import { useCallback, useEffect, useState, useTransition } from "react";
 import { useParams } from "next/navigation";
 import axios from "axios";
 
@@ -13,7 +13,7 @@ const useCourseMaterial = () => {
     quizes: [];
   }>({ notes: [], flashCards: [], quizes: [] });
 
-  const fetchCourseMaterial = () => {
+  const fetchCourseMaterial = useCallback(() => {
     start(async () => {
       const response = await axios.get(
         `/api/course-material?courseId=${courseId}`
@@ -25,11 +25,11 @@ const useCourseMaterial = () => {
         quizes: data.quizes,
       });
     });
-  };
+  }, [start, courseId]);
 
   useEffect(() => {
     fetchCourseMaterial();
-  }, [courseId]);
+  }, [fetchCourseMaterial]);
 
   return { materialData, loading, fetchCourseMaterial };
 };

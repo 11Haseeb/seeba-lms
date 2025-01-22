@@ -28,8 +28,7 @@ const QuizesPage = () => {
 
   useEffect(() => {
     setQuizes(materialData.quizes);
-    console.log(quizes);
-  }, [materialData]);
+  }, [materialData, quizes]);
 
   const handlePrev = () => {
     setQuizCount(quizCount - 1);

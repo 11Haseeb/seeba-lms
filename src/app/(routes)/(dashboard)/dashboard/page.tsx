@@ -14,7 +14,7 @@ const Dashboard = () => {
 
   useEffect(() => {
     setLimit(3);
-  }, []);
+  }, [setLimit]);
 
   return (
     <>

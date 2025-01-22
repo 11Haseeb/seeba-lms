@@ -24,9 +24,9 @@ const FooterLinks = () => {
 
   return (
     <div className="flex gap-2">
-      {links.map(({ icon: Icon, path, bgColor }) => {
+      {links.map(({ icon: Icon, path, bgColor }, index) => {
         return (
-          <Link href={path} target="_blank">
+          <Link key={index} href={path} target="_blank">
             <Icon className={`text-xl text-white ${bgColor} rounded-md`} />
           </Link>
         );

@@ -1,7 +1,6 @@
 import React from "react";
 import Logo from "@/components/logo";
 import AuthBtns from "@/components/auth-btns";
-import DashboardInfo from "./dashboard-info";
 
 const Navbar = () => {
   return (

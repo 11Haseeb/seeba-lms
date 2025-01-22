@@ -18,8 +18,7 @@ const NotesPage = () => {
 
   useEffect(() => {
     setNotes(materialData.notes);
-    console.log("Notes", notes);
-  }, [materialData]);
+  }, [materialData, notes]);
 
   return (
     <section>

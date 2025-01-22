@@ -1,5 +1,6 @@
 import React from "react";
 import ContactForm from "./_components/contact-form";
+import Image from "next/image";
 
 const ContactPage = () => {
   return (
@@ -12,10 +13,12 @@ const ContactPage = () => {
         </div>
       </div>
       <div className="relative hidden bg-muted lg:block">
-        <img
+        <Image
           src="/home-header.jpg"
           alt="Image"
           className="absolute inset-0 h-full w-full object-cover dark:brightness-[0.2] dark:grayscale"
+          width={1000}
+          height={1000}
         />
       </div>
     </div>

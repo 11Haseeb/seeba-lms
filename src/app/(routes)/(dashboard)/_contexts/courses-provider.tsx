@@ -7,6 +7,7 @@ import {
   createContext,
   ReactNode,
   useContext,
+  useCallback,
 } from "react";
 import { Course } from "@/types/course";
 import axios from "axios";
@@ -35,7 +36,7 @@ export const CoursesProvider = ({ children }: { children: ReactNode }) => {
   const [limit, setLimit] = useState<number>(12);
   const [offset, setOffset] = useState<number>(0);
 
-  const fetchCourses = () => {
+  const fetchCourses = useCallback(() => {
     start(async () => {
       const response = await axios.get(
         `/api/course?search=${search}&sort=${sort}&limit=${limit}&offset=${offset}`
@@ -45,11 +46,11 @@ export const CoursesProvider = ({ children }: { children: ReactNode }) => {
         setCourses(response.data.data);
       }
     });
-  };
+  }, [search, sort, limit, offset, start]);
 
   useEffect(() => {
     fetchCourses();
-  }, [search, sort, limit, offset]);
+  }, [fetchCourses]);
 
   return (
     <CoursesContext.Provider
