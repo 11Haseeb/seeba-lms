@@ -43,6 +43,7 @@ const CreateCourse = () => {
           replace("/dashboard/courses");
           fetchCourses();
         }
+        console.log(response)
       } catch (error) {
         if (axios.isAxiosError(error)) {
           toast({
@@ -51,6 +52,7 @@ const CreateCourse = () => {
             description: error.response?.data.message,
           });
         }
+        console.error(error)
       }
     });
   };

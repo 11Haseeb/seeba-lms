@@ -40,6 +40,7 @@ const GenerateBtn = ({ type, isMaterialReady }: Props) => {
           });
           push(`/dashboard/course/${courseId}/${type}`);
         }
+        console.log(response)
       } catch (error) {
         if (axios.isAxiosError(error)) {
           toast({
@@ -49,6 +50,7 @@ const GenerateBtn = ({ type, isMaterialReady }: Props) => {
           });
           console.error(error);
         }
+        console.error(error)
       }
     });
   };
