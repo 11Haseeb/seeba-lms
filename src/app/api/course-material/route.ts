@@ -74,7 +74,7 @@ export async function PATCH(request: Request) {
       return ApiResponse(
         500,
         "Something went wrong while generating course material",
-        error.message
+        error
       );
     }
   }
