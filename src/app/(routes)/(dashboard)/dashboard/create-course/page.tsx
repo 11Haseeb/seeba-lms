@@ -13,6 +13,13 @@ import { Button } from "@/components/ui/button";
 import { Loader } from "lucide-react";
 import { useCoursesContext } from "../../_contexts/courses-provider";
 
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import Link from "next/link";
+
 const CreateCourse = () => {
   const { user } = useUser();
   const { toast } = useToast();
@@ -43,7 +50,7 @@ const CreateCourse = () => {
           replace("/dashboard/courses");
           fetchCourses();
         }
-        console.log(response)
+        console.log(response);
       } catch (error) {
         if (axios.isAxiosError(error)) {
           toast({
@@ -52,13 +59,34 @@ const CreateCourse = () => {
             description: error.response?.data.message,
           });
         }
-        console.error(error)
+        console.error(error);
       }
     });
   };
 
   return (
     <section>
+      <Popover>
+        <PopoverTrigger asChild>
+          <Button variant="ghost">Must Read.</Button>
+        </PopoverTrigger>
+        <PopoverContent className="w-80">
+          <p>
+            In varcel, free deployement api works within 10 seconds if it is
+            taking longer to create then course will not generate.So, recommend
+            is to download source code locally and run in your machine.Below is
+            link.
+          </p>
+          <Link
+            href="https://github.com/11Haseeb/seeba-lms"
+            target="_blank"
+            className="underline font-semibold"
+          >
+            View Source Code
+          </Link>
+        </PopoverContent>
+      </Popover>
+
       <div className="max-w-[900px] w-full m-auto">
         <h2 className="text-4xl max-sm:text-3xl text-blue-500 text-center font-semibold mb-8">
           Create a New Course
